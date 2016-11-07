@@ -13,7 +13,8 @@ game_state.main.prototype = {
         game.load.image('sky', 'assets/sky.png')
         game.load.image('ground', 'assets/platform.png')
         game.load.image('star', 'assets/star.png')
-        game.load.spritesheet('dude', 'assets/dude.png', 32, 48)
+        game.load.spritesheet('fiona', 'assets/fiona.png', 128, 128)
+        game.load.image('diamond', 'assets/diamond.png')
 
     },
 
@@ -25,6 +26,8 @@ game_state.main.prototype = {
 
         game.add.sprite(0, 0, 'star')
         game.add.sprite(0, 0, 'sky')
+        game.add.sprite(0, 0, 'diamond')
+        
             // The platforms group contains the ground and the 2 ledges we can jump on
         this.platforms = game.add.group();
 
@@ -51,10 +54,13 @@ game_state.main.prototype = {
 
         var ledge = this.platforms.create(300, 300, 'ground');
         ledge.body.immovable = true;
+        
+        var ledge = this.platforms.create(0, 480, 'ground');
+        ledge.body.immovable = true;
 
 
         //The physics for this.player
-        this.player = game.add.sprite(150, game.world.height - 487, 'dude')
+        this.player = game.add.sprite(150, game.world.height - 487, 'fiona')
 
         //Enabling physics for this.player
         game.physics.arcade.enable(this.player);
@@ -83,6 +89,10 @@ game_state.main.prototype = {
         for (var i = 0; i < 12; i++) {
             //Create a star inside of the 'this.stars' group
             var star = this.stars.create(i * 70, 0, 'star');
+            
+            for(var d = 0; d < 10; i++){
+                var diamond = this.diamond.create(i * 70, 0, 'diamond')
+            }
 
             //Let gravity WORK
             star.body.gravity.y = 300;
@@ -125,7 +135,7 @@ game_state.main.prototype = {
         else {
             //Stand still
             this.player.animations.stop();
-            this.player.frame = 4;
+            this.player.frame = (0,1);
         }
 
         //Allows this.player to jump if they are touching the ground
